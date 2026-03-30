@@ -1,1089 +1,209 @@
-<!DOCTYPE html>
+d<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechCore Assistência</title>
-  <style>
-    :root {
-      --bg: #030a18;
-      --card: rgba(8, 18, 36, 0.96);
-      --card-2: #071428;
-      --panel: rgba(8, 18, 36, 0.96);
-      --line: rgba(255,255,255,0.06);
-      --text: #f8fafc;
-      --muted: #9fb0c7;
-      --blue: #4a86f7;
-      --blue-2: #2d6cdf;
-      --green: #22c55e;
-      --danger: #f87171;
-      --shadow: 0 18px 44px rgba(0,0,0,0.35);
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background:
-        linear-gradient(rgba(4,8,18,0.90), rgba(4,8,18,0.95)),
-        radial-gradient(circle at center, rgba(78,161,255,0.12), transparent 58%),
-        url('logo.png') center center / cover no-repeat fixed,
-        #040914;
-    }
-
-    .wrap {
-      width: min(100% - 20px, 1240px);
-      margin: 0 auto;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(4, 10, 20, 0.78);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .nav {
-      min-height: 82px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    .brand-mark {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 3px solid rgba(78,161,255,0.55);
-      box-shadow: 0 0 28px rgba(78,161,255,0.3);
-      flex-shrink: 0;
-      background: #07101f;
-    }
-
-    .brand-mark img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .brand-text strong {
-      display: block;
-      font-size: 24px;
-      line-height: 1;
-      letter-spacing: -0.03em;
-    }
-
-    .brand-text span {
-      display: block;
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      color: #dce8fb;
-      font-size: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .nav-links a,
-    .social-mini a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .social-mini {
-      display: flex;
-      gap: 14px;
-      color: #dce8fb;
-      font-size: 14px;
-      margin-top: 8px;
-    }
-
-    .nav-cta {
-      min-height: 50px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 18px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #25d366, #169a46);
-      color: white;
-      text-decoration: none;
-      font-weight: 800;
-      white-space: nowrap;
-      box-shadow: 0 10px 24px rgba(34,197,94,0.22);
-    }
-
-    .hero {
-      padding: 54px 0 28px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 24px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      min-height: 38px;
-      padding: 0 14px;
-      border-radius: 999px;
-      background: rgba(78,161,255,0.12);
-      border: 1px solid rgba(78,161,255,0.18);
-      color: #dbeafe;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    h1 {
-      margin: 18px 0 14px;
-      font-size: clamp(38px, 5vw, 62px);
-      line-height: 0.98;
-      letter-spacing: -0.05em;
-      max-width: 820px;
-    }
-
-    .lead {
-      margin: 0;
-      color: var(--muted);
-      max-width: 760px;
-      font-size: 18px;
-      line-height: 1.75;
-    }
-
-    .fast-note {
-      margin-top: 12px;
-      color: #86efac;
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 24px;
-    }
-
-    .btn {
-      min-height: 54px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 20px;
-      border-radius: 15px;
-      border: 1px solid transparent;
-      font-weight: 800;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform .18s ease;
-      font-size: 15px;
-    }
-
-    .btn:hover { transform: translateY(-1px); }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--blue), var(--blue-2));
-      color: white;
-      box-shadow: 0 14px 28px rgba(37,99,235,0.22);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.05);
-      color: white;
-      border-color: var(--line);
-    }
-
-    .kpis {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 26px;
-    }
-
-    .kpi {
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(10,18,34,0.88);
-      padding: 18px;
-      box-shadow: var(--shadow);
-    }
-
-    .kpi strong {
-      display: block;
-      font-size: 28px;
-      margin-bottom: 8px;
-    }
-
-    .kpi span {
-      display: block;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .rating-line {
-      margin-top: 18px;
-      color: #dbeafe;
-      font-size: 14px;
-    }
-
-    .hero-card,
-    .summary-box,
-    .service-card,
-    .process-card,
-    .faq-card,
-    .panel {
-      backdrop-filter: blur(12px);
-    }
-
-    .hero-card {
-      border-radius: 28px;
-      padding: 24px;
-      background: linear-gradient(180deg, rgba(12,22,40,0.96), rgba(8,15,28,0.96));
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-card h3 { margin: 0 0 10px; font-size: 28px; }
-    .hero-card p { margin: 0 0 16px; color: var(--muted); line-height: 1.7; }
-
-    .mini-list { display: grid; gap: 12px; }
-
-    .mini-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 18px;
-      padding: 14px;
-    }
-
-    .mini-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: rgba(78,161,255,0.16);
-      color: white;
-      font-weight: 900;
-      flex-shrink: 0;
-    }
-
-    .mini-item strong { display: block; margin-bottom: 6px; font-size: 18px; }
-    .mini-item span { color: var(--muted); line-height: 1.55; font-size: 14px; }
-
-    .section { padding: 30px 0; }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: clamp(28px, 4vw, 40px);
-      letter-spacing: -0.04em;
-    }
-
-    .section-head p {
-      margin: 0;
-      max-width: 760px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .service-cats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .service-card {
-      border-radius: 22px;
-      border: 1px solid var(--line);
-      background: rgba(10,18,34,0.92);
-      padding: 20px;
-      box-shadow: var(--shadow);
-      min-height: 208px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .service-tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 30px;
-      padding: 0 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-      color: #dbeafe;
-      background: rgba(78,161,255,0.12);
-      border: 1px solid rgba(78,161,255,0.18);
-      margin-bottom: 14px;
-    }
-
-    .service-card h3 {
-      margin: 0 0 10px;
-      font-size: 19px;
-      line-height: 1.35;
-    }
-
-    .service-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    .service-card strong {
-      display: block;
-      margin-top: 16px;
-      font-size: 22px;
-    }
-
-    .process {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .process-card {
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      background: rgba(10,18,34,0.92);
-      padding: 18px;
-      box-shadow: var(--shadow);
-    }
-
-    .step {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: rgba(78,161,255,0.13);
-      color: white;
-      font-weight: 900;
-      margin-bottom: 12px;
-    }
-
-    .process-card strong { display: block; margin-bottom: 8px; font-size: 18px; }
-    .process-card p { margin: 0; color: var(--muted); line-height: 1.6; font-size: 14px; }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 20px;
-      align-items: start;
-    }
-
-    .panel {
-      border-radius: 28px;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      padding: 22px;
-      box-shadow: var(--shadow);
-    }
-
-    .panel h3 { margin: 0 0 10px; font-size: 28px; }
-    .panel .sub { margin: 0 0 18px; color: var(--muted); line-height: 1.7; }
-
-    .tabs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-
-    .tab {
-      min-height: 44px;
-      padding: 0 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .tab.active {
-      background: linear-gradient(135deg, var(--blue), var(--blue-2));
-      border-color: transparent;
-    }
-
-    .tab-pane { display: none; }
-    .tab-pane.active { display: block; }
-
-    .field-grid-2,
-    .field-grid-3 {
-      display: grid;
-      gap: 12px;
-    }
-
-    .field-grid-2 { grid-template-columns: repeat(2, 1fr); }
-    .field-grid-3 { grid-template-columns: repeat(3, 1fr); }
-
-    .label {
-      display: block;
-      margin: 14px 0 8px;
-      color: #edf4ff;
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      min-height: 54px;
-      padding: 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: var(--card-2);
-      color: white;
-      font-size: 15px;
-      outline: none;
-    }
-
-    textarea {
-      min-height: 112px;
-      resize: vertical;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: #94a3b8;
-    }
-
-    .notice {
-      margin-top: 12px;
-      border-radius: 16px;
-      padding: 14px 16px;
-      color: var(--danger);
-      line-height: 1.55;
-      font-size: 13px;
-      background: rgba(248,113,113,0.08);
-      border: 1px solid rgba(248,113,113,0.18);
-    }
-
-    .checklist { display: grid; gap: 10px; }
-
-    .check {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      width: 100%;
-      background: rgba(6,12,24,0.96);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 18px;
-      padding: 14px;
-      cursor: pointer;
-    }
-
-    .check input[type='checkbox'] {
-      width: 22px;
-      height: 22px;
-      accent-color: var(--blue-2);
-      flex-shrink: 0;
-      margin: 0;
-      cursor: pointer;
-    }
-
-    .check-title {
-      display: block;
-      font-size: 15px;
-      line-height: 1.35;
-      color: white;
-      font-weight: 700;
-    }
-
-    .check-sub {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .summary {
-      position: sticky;
-      top: 102px;
-      display: grid;
-      gap: 14px;
-    }
-
-    .summary-box {
-      border-radius: 24px;
-      border: 1px solid var(--line);
-      background: rgba(8,16,30,0.98);
-      padding: 20px;
-      box-shadow: var(--shadow);
-    }
-
-    .summary-box h4 { margin: 0 0 12px; font-size: 22px; }
-
-    .summary-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .summary-item {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      color: #ecf4ff;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .summary-muted {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
-    .total-box {
-      margin-top: 14px;
-      border-radius: 22px;
-      padding: 16px;
-      border: 1px solid rgba(34,197,94,0.18);
-      background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(37,99,235,0.08));
-    }
-
-    .total-box span {
-      color: #dcfce7;
-      font-size: 14px;
-    }
-
-    .total-box strong {
-      display: block;
-      font-size: 38px;
-      margin-top: 8px;
-      letter-spacing: -0.04em;
-    }
-
-    .summary-actions {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .faq {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .faq-card {
-      border-radius: 22px;
-      border: 1px solid var(--line);
-      background: rgba(10,18,34,0.92);
-      padding: 20px;
-      box-shadow: var(--shadow);
-    }
-
-    .faq-card h3 { margin: 0 0 10px; font-size: 19px; }
-    .faq-card p { margin: 0; color: var(--muted); line-height: 1.7; font-size: 14px; }
-
-    footer {
-      padding: 28px 0 60px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .whats-float {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 90;
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #25d366, #169a46);
-      display: grid;
-      place-items: center;
-      color: white;
-      font-size: 28px;
-      font-weight: 900;
-      box-shadow: 0 14px 34px rgba(34,197,94,0.34);
-      text-decoration: none;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-      100% { transform: scale(1); }
-    }
-
-    @media (max-width: 1180px) {
-      .hero-grid, .layout { grid-template-columns: 1fr; }
-      .service-cats, .process { grid-template-columns: repeat(2, 1fr); }
-      .summary { position: static; }
-      .faq { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 760px) {
-      .nav-links { display: none; }
-      .brand-text strong { font-size: 20px; }
-      .wrap { width: min(100% - 16px, 1240px); }
-      .field-grid-2, .field-grid-3, .kpis, .service-cats, .process { grid-template-columns: 1fr; }
-      .panel, .hero-card, .summary-box { padding: 16px; border-radius: 22px; }
-      .topbar { position: static; }
-      h1 { font-size: 36px; }
-      .nav-cta { padding: 0 14px; font-size: 14px; }
-      .brand { align-items: flex-start; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechCore Assistência</title>
+
+<style>
+:root {
+--bg:#030a18;
+--card:#081224;
+--line:rgba(255,255,255,0.06);
+--text:#fff;
+--muted:#9fb0c7;
+--blue:#4a86f7;
+--green:#22c55e;
+}
+
+body{
+margin:0;
+font-family:Arial;
+color:var(--text);
+background:
+linear-gradient(rgba(4,8,18,0.92),rgba(4,8,18,0.96)),
+url('logo.png') center/cover no-repeat fixed;
+}
+
+.wrap{width:min(100% - 20px,1200px);margin:auto;}
+
+h1{font-size:40px;}
+
+.tabs{display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap;}
+.tab{
+padding:10px 16px;
+border-radius:20px;
+border:1px solid var(--line);
+background:#111;
+cursor:pointer;
+}
+.tab.active{
+background:var(--blue);
+border:none;
+}
+
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+margin:5px 0;
+border-radius:10px;
+border:none;
+background:#111;
+color:#fff;
+}
+
+button{
+padding:12px;
+border:none;
+border-radius:10px;
+background:var(--blue);
+color:#fff;
+cursor:pointer;
+}
+
+.check{display:flex;gap:10px;margin:10px 0;cursor:pointer;}
+
+.total{font-size:30px;margin:15px 0;color:var(--green);}
+
+.whats-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:#fff;
+padding:15px;
+border-radius:50%;
+font-size:22px;
+text-decoration:none;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.1);}
+100%{transform:scale(1);}
+}
+</style>
 </head>
+
 <body>
-  <div class="topbar">
-    <div class="wrap nav">
-      <div class="brand">
-        <div class="brand-mark"><img src="logo.png" alt="TechCore Assistência"></div>
-        <div class="brand-text">
-          <strong>TechCore Assistência</strong>
-          <span>Atendimento rápido em Chapecó e região</span>
-          <div class="social-mini">
-            <a href="https://wa.me/5549991204177" target="_blank">WhatsApp</a>
-            <a href="#" target="_blank">Instagram</a>
-            <a href="#" target="_blank">Facebook</a>
-          </div>
-        </div>
-      </div>
 
-      <div class="nav-links">
-        <a href="#servicos">Serviços</a>
-        <a href="#como-funciona">Como funciona</a>
-        <a href="#orcamento">Orçamento</a>
-        <a href="#faq">Dúvidas</a>
-      </div>
+<div class="wrap">
 
-      <a class="nav-cta" href="https://wa.me/5549991204177" target="_blank">WhatsApp</a>
-    </div>
-  </div>
+<h1>Orçamento rápido TechCore</h1>
 
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <div class="eyebrow">Atendimento profissional • Orçamento validado • Chapecó - SC</div>
-        <h1>Seu notebook com problema merece um atendimento sério, rápido e sem improviso</h1>
-        <p class="lead">Estrutura profissional, serviços organizados, orçamento validado por processador e envio completo para WhatsApp. Tudo pensado para gerar confiança e transformar visita em fechamento real.</p>
-        <p class="fast-note">✔ Orçamento em menos de 30 segundos</p>
-        <div class="hero-actions">
-          <a href="#orcamento" class="btn btn-primary">Ver valor do reparo agora</a>
-          <a href="#servicos" class="btn btn-secondary">Ver todos os serviços</a>
-        </div>
-        <div class="kpis">
-          <div class="kpi"><strong>1000+</strong><span>Notebooks reparados com processo organizado e apresentação profissional.</span></div>
-          <div class="kpi"><strong>3h</strong><span>Tempo médio de resposta inicial entre orçamento e alinhamento da retirada.</span></div>
-          <div class="kpi"><strong>Garantia</strong><span>O valor mostrado aqui é definitivo, desde que as informações estejam corretas.</span></div>
-        </div>
-        <div class="rating-line">⭐ Avaliação 5 estrelas • Clientes atendidos diariamente</div>
-      </div>
+<div style="color:#22c55e;font-weight:bold;margin-bottom:10px;">
+Passo 1: Cliente → Passo 2: Notebook → Passo 3: Serviços
+</div>
 
-      <div class="hero-card">
-        <h3>O que acontece aqui</h3>
-        <p>Aqui você já vê o valor real do serviço antes mesmo de falar com o técnico.</p>
-        <p>Você faz o orçamento real do seu reparo ou serviço, sem enrolação e sem surpresa. Se gostar do preço, basta chamar o técnico com o orçamento pronto e aguardar a retirada. Atendimento exclusivo para Chapecó e região.</p>
-        <div class="mini-list">
-          <div class="mini-item">
-            <div class="mini-icon">1</div>
-            <div>
-              <strong>Você faz seu orçamento</strong>
-              <span>Monte seu orçamento completo de forma rápida e direta, com todos os valores definidos.</span>
-            </div>
-          </div>
-          <div class="mini-item">
-            <div class="mini-icon">2</div>
-            <div>
-              <strong>Envia para técnico</strong>
-              <span>O orçamento gerado é enviado direto para o técnico responsável, sem distorções.</span>
-            </div>
-          </div>
-          <div class="mini-item">
-            <div class="mini-icon">3</div>
-            <div>
-              <strong>Aguardar confirmação</strong>
-              <span>Após o envio, basta aguardar a confirmação e a retirada do equipamento para o serviço.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<div class="tabs">
+<button class="tab active" data-tab="cliente">Passo 1 • Cliente</button>
+<button class="tab" data-tab="notebook">Passo 2 • Notebook</button>
+<button class="tab" data-tab="servicos">Passo 3 • Serviços</button>
+</div>
 
-  <section class="section" id="servicos">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <h2>Serviços profissionais</h2>
-          <p>O site está estruturado para apresentar seu negócio com clareza, transmitir confiança e facilitar o fechamento do serviço.</p>
-        </div>
-      </div>
+<!-- CLIENTE -->
+<div id="cliente" class="tab-pane active">
+<input id="nome" placeholder="Nome">
+<input id="bairro" placeholder="Bairro">
+<input id="contato" placeholder="WhatsApp">
+</div>
 
-      <div class="service-cats">
-        <div class="service-card"><div><span class="service-tag">Sistema</span><h3>Formatação sem backup</h3><p>Instalação limpa do sistema com configuração padrão do equipamento.</p></div><strong>R$ 140</strong></div>
-        <div class="service-card"><div><span class="service-tag">Sistema</span><h3>Formatação com backup</h3><p>Formatação com preservação dos dados informados pelo cliente.</p></div><strong>R$ 190</strong></div>
-        <div class="service-card"><div><span class="service-tag">Tela</span><h3>Troca de tela</h3><p>Substituição completa do display com foco em compatibilidade e acabamento.</p></div><strong>R$ 680</strong></div>
-        <div class="service-card"><div><span class="service-tag">Diagnóstico</span><h3>Diagnóstico técnico</h3><p>Análise inicial para localizar a origem do defeito e orientar o serviço correto.</p></div><strong>R$ 120</strong></div>
-        <div class="service-card"><div><span class="service-tag">Teclado</span><h3>Teclado embutido (interno)</h3><p>Troca do teclado interno com desmontagem e montagem adequadas.</p></div><strong>R$ 490</strong></div>
-        <div class="service-card"><div><span class="service-tag">Preventiva</span><h3>Limpeza + pasta térmica</h3><p>Preventiva para reduzir aquecimento e preservar desempenho do equipamento.</p></div><strong>R$ 160</strong></div>
-        <div class="service-card"><div><span class="service-tag">Estrutural</span><h3>Reparo de carcaça</h3><p>O valor é calculado automaticamente conforme a geração do processador.</p></div><strong>Automático</strong></div>
-        <div class="service-card"><div><span class="service-tag">Atendimento</span><h3>Retirada e entrega</h3><p>Fluxo pensado para facilitar o contato, a confirmação e a logística do serviço.</p></div><strong>Integrado</strong></div>
-      </div>
-    </div>
-  </section>
+<!-- NOTEBOOK -->
+<div id="notebook" class="tab-pane">
+<input id="marca" placeholder="Marca">
+<select id="cpuTipo">
+<option value="">Processador</option>
+<option>i3</option>
+<option>i5</option>
+<option>i7</option>
+</select>
 
-  <section class="section" id="como-funciona">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <h2>Como funciona</h2>
-          <p>Fluxo claro, rápido e profissional para evitar dúvida, erro de orçamento e perda de tempo.</p>
-        </div>
-      </div>
+<select id="cpuGeracao">
+<option value="">Geração</option>
+<option value="6">6</option>
+<option value="8">8</option>
+<option value="10">10</option>
+<option value="11">11+</option>
+</select>
+</div>
 
-      <div class="process">
-        <div class="process-card"><div class="step">1</div><strong>Escolha os serviços</strong><p>O cliente marca exatamente os serviços desejados antes de enviar o orçamento.</p></div>
-        <div class="process-card"><div class="step">2</div><strong>Informe o notebook</strong><p>Marca, processador e geração são fundamentais para o cálculo correto da carcaça.</p></div>
-        <div class="process-card"><div class="step">3</div><strong>Veja a soma automática</strong><p>Os serviços fixos somam sozinhos e a carcaça entra automaticamente se marcada.</p></div>
-        <div class="process-card"><div class="step">4</div><strong>Envie no WhatsApp</strong><p>Os dados seguem completos para você confirmar e alinhar a retirada do equipamento.</p></div>
-      </div>
-    </div>
-  </section>
+<!-- SERVIÇOS -->
+<div id="servicos" class="tab-pane">
+<label class="check"><input type="checkbox" value="140"> Formatação</label>
+<label class="check"><input type="checkbox" value="190"> Formatação + backup</label>
+<label class="check"><input type="checkbox" value="680"> Troca de tela</label>
+<label class="check"><input type="checkbox" value="490"> Teclado</label>
+<label class="check"><input type="checkbox" id="carcaca"> Carcaça automática</label>
+</div>
 
-  <section class="section" id="orcamento">
-    <div class="wrap layout">
-      <div class="panel">
-        <h3>Orçamento validado</h3>
-        <p class="sub">Layout profissional preservado e lógica corrigida. Agora seleção, soma automática, carcaça por geração e envio para WhatsApp funcionam corretamente.</p>
+<div class="total">R$ <span id="total">0</span></div>
 
-        <div class="tabs">
-          <button class="tab active" data-tab="tab-servicos" type="button">Serviços</button>
-          <button class="tab" data-tab="tab-notebook" type="button">Notebook</button>
-          <button class="tab" data-tab="tab-cliente" type="button">Cliente</button>
-        </div>
+<button onclick="enviar()">Enviar orçamento</button>
 
-        <div id="tab-servicos" class="tab-pane active">
-          <span class="label">Selecione os serviços</span>
-          <div class="checklist">
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="140" data-name="Formatação sem backup"><div><span class="check-title">Formatação sem backup</span><span class="check-sub">R$ 140</span></div></label>
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="190" data-name="Formatação com backup"><div><span class="check-title">Formatação com backup</span><span class="check-sub">R$ 190</span></div></label>
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="680" data-name="Troca de tela"><div><span class="check-title">Troca de tela</span><span class="check-sub">R$ 680</span></div></label>
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="120" data-name="Diagnóstico técnico"><div><span class="check-title">Diagnóstico técnico</span><span class="check-sub">R$ 120</span></div></label>
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="490" data-name="Teclado embutido (interno)"><div><span class="check-title">Teclado embutido (interno)</span><span class="check-sub">R$ 490</span></div></label>
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="160" data-name="Limpeza + pasta térmica"><div><span class="check-title">Limpeza + pasta térmica</span><span class="check-sub">R$ 160</span></div></label>
-            <label class="check"><input type="checkbox" id="carcacaCheck"><div><span class="check-title">Reparo de carcaça</span><span class="check-sub">Valor automático conforme geração do processador</span></div></label>
-          </div>
-        </div>
+</div>
 
-        <div id="tab-notebook" class="tab-pane">
-          <span class="label">Informações do notebook</span>
-          <div class="field-grid-3">
-            <input id="marca" placeholder="Marca do notebook" />
-            <select id="cpuTipo">
-              <option value="">Processador</option>
-              <option value="Intel i3">Intel i3</option>
-              <option value="Intel i5">Intel i5</option>
-              <option value="Intel i7">Intel i7</option>
-            </select>
-            <select id="cpuGeracao" disabled>
-              <option value="">Geração</option>
-              <option value="2">2ª geração</option>
-              <option value="3">3ª geração</option>
-              <option value="4">4ª geração</option>
-              <option value="6">6ª geração</option>
-              <option value="7">7ª geração</option>
-              <option value="8">8ª geração</option>
-              <option value="9">9ª geração</option>
-              <option value="10">10ª geração</option>
-              <option value="11">11ª geração ou superior</option>
-            </select>
-          </div>
-          <div class="notice">A geração é utilizada para termos uma base real do equipamento e é a base do sistema de orçamento. Nossas tabelas seguem a geração do processador, tornando o orçamento mais preciso, assertivo e claro.</div>
-        </div>
+<a class="whats-float" href="https://wa.me/5549991204177">💬</a>
 
-        <div id="tab-cliente" class="tab-pane">
-          <span class="label">Dados do cliente</span>
-          <div class="field-grid-2">
-            <input id="nome" placeholder="Nome" />
-            <input id="bairro" placeholder="Bairro" />
-          </div>
-          <div class="field-grid-2">
-            <input id="contato" placeholder="WhatsApp" />
-            <input id="horario" placeholder="Horário disponível para retirada" />
-          </div>
-          <textarea id="obs" placeholder="Observações adicionais (opcional)"></textarea>
-        </div>
+<script>
 
-        <div class="field-grid-2" style="margin-top:18px;">
-          <button id="btnOrcamento" class="btn btn-primary" type="button">Gerar orçamento</button>
-          <button class="btn btn-secondary" onclick="limparFormulario()" type="button">Limpar</button>
-        </div>
-      </div>
+let total=0;
 
-      <div class="summary">
-        <div class="summary-box">
-          <h4>Resumo do orçamento</h4>
-          <div class="summary-list" id="resumoServicos">
-            <div class="summary-item"><span>Nenhum serviço selecionado</span><span>-</span></div>
-          </div>
-          <div class="summary-muted" id="resumoNotebook">Preencha marca, processador e geração para validar o cálculo.</div>
-          <div class="total-box">
-            <span>Valor total estimado</span>
-            <strong id="total">R$ 0</strong>
-          </div>
-          <div class="summary-actions">
-            <button class="btn btn-primary" onclick="enviarWhatsApp()" type="button">Quero fazer o serviço</button>
-            <a class="btn btn-secondary" href="https://wa.me/5549991204177" target="_blank">Falar direto no WhatsApp</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+const checkboxes=document.querySelectorAll("input[type=checkbox]");
+const totalEl=document.getElementById("total");
 
-  <section class="section" id="faq">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <h2>Dúvidas frequentes</h2>
-          <p>Respostas claras aumentam confiança e reduzem objeções antes do contato.</p>
-        </div>
-      </div>
+function calcular(){
+total=0;
 
-      <div class="faq">
-        <div class="faq-card"><h3>O valor já é definitivo?</h3><p>Sim. O valor gerado aqui é definitivo e não será alterado, desde que as informações fornecidas estejam corretas (modelo, processador e serviços selecionados).</p></div>
-        <div class="faq-card"><h3>Por que a geração importa?</h3><p>A geração é utilizada para termos uma base real do equipamento e é a base do sistema de orçamento. Nossas tabelas seguem a geração do processador, tornando o orçamento mais preciso, assertivo e claro.</p></div>
-        <div class="faq-card"><h3>O que vai para o WhatsApp?</h3><p>Marca e processador do notebook, tipo de serviço selecionado, nome do cliente, bairro, contato, horário e o total final do orçamento. É muito importante que todos os campos estejam corretos para garantir um atendimento preciso e sem erros.</p></div>
-      </div>
-    </div>
-  </section>
+checkboxes.forEach(c=>{
+if(c.checked && c.value){
+total+=parseInt(c.value);
+}
+});
 
-  <footer>
-    <div class="wrap">TechCore Assistência • Chapecó - SC • WhatsApp: (49) 99120-4177</div>
-  </footer>
+if(document.getElementById("carcaca").checked){
+let g=parseInt(document.getElementById("cpuGeracao").value);
+if(g<=6) total+=460;
+else if(g<=10) total+=580;
+else total+=650;
+}
 
-  <a class="whats-float" href="https://wa.me/5549991204177" target="_blank">✆</a>
+totalEl.innerText=total;
+}
 
-  <script>
-    const marcaInput = document.getElementById('marca');
-    const cpuTipo = document.getElementById('cpuTipo');
-    const cpuGeracao = document.getElementById('cpuGeracao');
-    const btnOrcamento = document.getElementById('btnOrcamento');
-    const totalEl = document.getElementById('total');
-    const resumoServicos = document.getElementById('resumoServicos');
-    const resumoNotebook = document.getElementById('resumoNotebook');
-    const nomeInput = document.getElementById('nome');
-    const bairroInput = document.getElementById('bairro');
-    const contatoInput = document.getElementById('contato');
-    const horarioInput = document.getElementById('horario');
-    const obsInput = document.getElementById('obs');
-    const carcacaCheck = document.getElementById('carcacaCheck');
-    const servicoCheckboxes = document.querySelectorAll('.servico-checkbox');
+checkboxes.forEach(c=>c.addEventListener("change",calcular));
+document.getElementById("cpuGeracao").addEventListener("change",calcular);
 
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
-      });
-    });
+function enviar(){
+let nome=document.getElementById("nome").value;
+let marca=document.getElementById("marca").value;
 
-    function liberarGeracao() {
-      cpuGeracao.disabled = !cpuTipo.value;
-      if (!cpuTipo.value) {
-        cpuGeracao.value = '';
-      }
-      atualizarBotao();
-      atualizarResumoParcial();
-      atualizarTotalAutomatico();
-    }
+let msg=`Olá, fiz um orçamento na TechCore:
 
-    function atualizarBotao() {
-      btnOrcamento.disabled = !(marcaInput.value.trim() && cpuTipo.value && cpuGeracao.value);
-    }
+Cliente: ${nome}
+Notebook: ${marca}
+Total: R$ ${total}
 
-    function obterValorCarcaca(geracao) {
-      const g = Number(geracao);
-      if (!g) return 0;
-      if (g <= 6) return 460;
-      if (g <= 10) return 580;
-      return 650;
-    }
+Meu problema é:`;
 
-    function listarServicosSelecionados() {
-      const itens = [];
+window.open(`https://wa.me/5549991204177?text=${encodeURIComponent(msg)}`);
+}
 
-      servicoCheckboxes.forEach(el => {
-        if (el.checked) {
-          itens.push({ nome: el.dataset.name, valor: Number(el.value) });
-        }
-      });
+/* TABS */
+document.querySelectorAll(".tab").forEach(btn=>{
+btn.onclick=()=>{
+document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));
 
-      if (carcacaCheck.checked) {
-        const valorCarcaca = obterValorCarcaca(cpuGeracao.value);
-        if (valorCarcaca > 0) {
-          itens.push({ nome: 'Reparo de carcaça', valor: valorCarcaca });
-        }
-      }
+btn.classList.add("active");
+document.getElementById(btn.dataset.tab).classList.add("active");
+};
+});
 
-      return itens;
-    }
+</script>
 
-    function formatarMoeda(valor) {
-      return `R$ ${valor}`;
-    }
-
-    function atualizarResumoParcial() {
-      const marca = marcaInput.value.trim();
-      const tipo = cpuTipo.value;
-      const geracao = cpuGeracao.value;
-      const itens = listarServicosSelecionados();
-
-      if (!itens.length) {
-        resumoServicos.innerHTML = '<div class="summary-item"><span>Nenhum serviço selecionado</span><span>-</span></div>';
-      } else {
-        resumoServicos.innerHTML = itens
-          .map(item => `<div class="summary-item"><span>${item.nome}</span><span>${formatarMoeda(item.valor)}</span></div>`)
-          .join('');
-      }
-
-      resumoNotebook.textContent = marca && tipo && geracao
-        ? `Notebook informado: ${marca} • ${tipo} • ${geracao}ª geração`
-        : 'Preencha marca, processador e geração para validar o cálculo.';
-    }
-
-    function atualizarTotalAutomatico() {
-      const itens = listarServicosSelecionados();
-      const total = itens.reduce((acc, item) => acc + item.valor, 0);
-      totalEl.textContent = formatarMoeda(total);
-      return total;
-    }
-
-    function calcular() {
-      const marca = marcaInput.value.trim();
-      const tipo = cpuTipo.value;
-      const geracao = Number(cpuGeracao.value);
-
-      if (!marca || !tipo || !geracao) {
-        alert('Preencha marca, processador e geração.');
-        return;
-      }
-
-      atualizarResumoParcial();
-      atualizarTotalAutomatico();
-    }
-
-    function limparFormulario() {
-      servicoCheckboxes.forEach(el => { el.checked = false; });
-      carcacaCheck.checked = false;
-      marcaInput.value = '';
-      cpuTipo.value = '';
-      cpuGeracao.value = '';
-      cpuGeracao.disabled = true;
-      nomeInput.value = '';
-      bairroInput.value = '';
-      contatoInput.value = '';
-      horarioInput.value = '';
-      obsInput.value = '';
-      totalEl.textContent = 'R$ 0';
-      atualizarBotao();
-      atualizarResumoParcial();
-    }
-
-    function enviarWhatsApp() {
-      const marca = marcaInput.value.trim();
-      const tipo = cpuTipo.value;
-      const geracao = Number(cpuGeracao.value);
-      const nome = nomeInput.value.trim();
-      const bairro = bairroInput.value.trim();
-      const contato = contatoInput.value.trim();
-      const horario = horarioInput.value.trim();
-      const obs = obsInput.value.trim();
-
-      if (!marca || !tipo || !geracao) {
-        alert('Preencha marca, processador e geração antes de enviar.');
-        return;
-      }
-
-      const itens = listarServicosSelecionados();
-      if (!itens.length) {
-        alert('Selecione pelo menos um serviço.');
-        return;
-      }
-
-      const total = itens.reduce((acc, item) => acc + item.valor, 0);
-      const linhasServicos = itens.map(item => `- ${item.nome} ${formatarMoeda(item.valor)}`).join('\n');
-
-      const msg = `Olá, vi o site da TechCore e fiz um orçamento:\n\nCliente: ${nome || 'Não informado'}\nBairro: ${bairro || 'Não informado'}\nContato: ${contato || 'Não informado'}\nHorário: ${horario || 'Não informado'}\n\nNotebook: ${marca} ${tipo} ${geracao}ª geração\n\nServiços:\n${linhasServicos}\n\nTotal: ${formatarMoeda(total)}\n\nMeu notebook está com o seguinte problema:${obs ? `\n${obs}` : ''}`;
-
-      window.open(`https://wa.me/5549991204177?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    cpuTipo.addEventListener('change', liberarGeracao);
-    cpuGeracao.addEventListener('change', () => {
-      atualizarBotao();
-      atualizarResumoParcial();
-      atualizarTotalAutomatico();
-    });
-
-    [marcaInput, nomeInput, bairroInput, contatoInput, horarioInput, obsInput].forEach(el => {
-      el.addEventListener('input', () => {
-        atualizarBotao();
-        atualizarResumoParcial();
-      });
-    });
-
-    servicoCheckboxes.forEach(el => {
-      el.addEventListener('change', () => {
-        atualizarResumoParcial();
-        atualizarTotalAutomatico();
-      });
-    });
-
-    carcacaCheck.addEventListener('change', () => {
-      atualizarResumoParcial();
-      atualizarTotalAutomatico();
-    });
-
-    btnOrcamento.addEventListener('click', calcular);
-
-    atualizarResumoParcial();
-    atualizarBotao();
-    atualizarTotalAutomatico();
-  </script>
 </body>
 </html>
