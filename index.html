@@ -9,12 +9,14 @@
       --bg: #030a18;
       --card: rgba(8, 18, 36, 0.96);
       --card-2: #071428;
+      --panel: rgba(8, 18, 36, 0.96);
       --line: rgba(255,255,255,0.06);
       --text: #f8fafc;
       --muted: #9fb0c7;
       --blue: #4a86f7;
       --blue-2: #2d6cdf;
       --green: #22c55e;
+      --danger: #f87171;
       --shadow: 0 18px 44px rgba(0,0,0,0.35);
     }
 
@@ -25,9 +27,9 @@
       font-family: Arial, Helvetica, sans-serif;
       color: var(--text);
       background:
-        linear-gradient(rgba(4,8,18,0.86), rgba(4,8,18,0.94)),
+        linear-gradient(rgba(4,8,18,0.90), rgba(4,8,18,0.95)),
         radial-gradient(circle at center, rgba(78,161,255,0.12), transparent 58%),
-        url('fundo.png') center center / cover no-repeat fixed,
+        url('logo.png') center center / cover no-repeat fixed,
         #040914;
     }
 
@@ -102,9 +104,18 @@
       justify-content: center;
     }
 
-    .nav-links a {
+    .nav-links a,
+    .social-mini a {
       color: inherit;
       text-decoration: none;
+    }
+
+    .social-mini {
+      display: flex;
+      gap: 14px;
+      color: #dce8fb;
+      font-size: 14px;
+      margin-top: 8px;
     }
 
     .nav-cta {
@@ -162,6 +173,13 @@
       line-height: 1.75;
     }
 
+    .fast-note {
+      margin-top: 12px;
+      color: #86efac;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
@@ -181,6 +199,7 @@
       cursor: pointer;
       text-decoration: none;
       transition: transform .18s ease;
+      font-size: 15px;
     }
 
     .btn:hover { transform: translateY(-1px); }
@@ -223,6 +242,12 @@
       color: var(--muted);
       font-size: 14px;
       line-height: 1.55;
+    }
+
+    .rating-line {
+      margin-top: 18px;
+      color: #dbeafe;
+      font-size: 14px;
     }
 
     .hero-card,
@@ -613,6 +638,13 @@
       font-weight: 900;
       box-shadow: 0 14px 34px rgba(34,197,94,0.34);
       text-decoration: none;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
     }
 
     @media (max-width: 1180px) {
@@ -631,6 +663,7 @@
       .topbar { position: static; }
       h1 { font-size: 36px; }
       .nav-cta { padding: 0 14px; font-size: 14px; }
+      .brand { align-items: flex-start; }
     }
   </style>
 </head>
@@ -641,7 +674,12 @@
         <div class="brand-mark"><img src="logo.png" alt="TechCore Assistência"></div>
         <div class="brand-text">
           <strong>TechCore Assistência</strong>
-          <span>Recuperação profissional de notebooks • Chapecó - SC</span>
+          <span>Atendimento rápido em Chapecó e região</span>
+          <div class="social-mini">
+            <a href="https://wa.me/5549991204177" target="_blank">WhatsApp</a>
+            <a href="#" target="_blank">Instagram</a>
+            <a href="#" target="_blank">Facebook</a>
+          </div>
         </div>
       </div>
 
@@ -662,8 +700,9 @@
         <div class="eyebrow">Atendimento profissional • Orçamento validado • Chapecó - SC</div>
         <h1>Seu notebook com problema merece um atendimento sério, rápido e sem improviso</h1>
         <p class="lead">Estrutura profissional, serviços organizados, orçamento validado por processador e envio completo para WhatsApp. Tudo pensado para gerar confiança e transformar visita em fechamento real.</p>
+        <p class="fast-note">✔ Orçamento em menos de 30 segundos</p>
         <div class="hero-actions">
-          <a href="#orcamento" class="btn btn-primary">Fazer orçamento agora</a>
+          <a href="#orcamento" class="btn btn-primary">Ver valor do reparo agora</a>
           <a href="#servicos" class="btn btn-secondary">Ver todos os serviços</a>
         </div>
         <div class="kpis">
@@ -671,12 +710,13 @@
           <div class="kpi"><strong>3h</strong><span>Tempo médio de resposta inicial entre orçamento e alinhamento da retirada.</span></div>
           <div class="kpi"><strong>Garantia</strong><span>O valor mostrado aqui é definitivo, desde que as informações estejam corretas.</span></div>
         </div>
+        <div class="rating-line">⭐ Avaliação 5 estrelas • Clientes atendidos diariamente</div>
       </div>
 
       <div class="hero-card">
         <h3>O que acontece aqui</h3>
-        <p>Não é só uma vitrine. É uma ferramenta comercial real para filtrar cliente, mostrar preço, profissionalizar a empresa e acelerar o fechamento.</p>
-        <p>Você faz o orçamento real do seu reparo ou serviço, sem enrolação e sem surpresa. Se gostar do preço, basta chamar o técnico com o orçamento pronto e aguardar a retirada. Atendimento exclusivo para Chapecó — não atendemos outras cidades.</p>
+        <p>Aqui você já vê o valor real do serviço antes mesmo de falar com o técnico.</p>
+        <p>Você faz o orçamento real do seu reparo ou serviço, sem enrolação e sem surpresa. Se gostar do preço, basta chamar o técnico com o orçamento pronto e aguardar a retirada. Atendimento exclusivo para Chapecó e região.</p>
         <div class="mini-list">
           <div class="mini-item">
             <div class="mini-icon">1</div>
@@ -738,7 +778,7 @@
       <div class="process">
         <div class="process-card"><div class="step">1</div><strong>Escolha os serviços</strong><p>O cliente marca exatamente os serviços desejados antes de enviar o orçamento.</p></div>
         <div class="process-card"><div class="step">2</div><strong>Informe o notebook</strong><p>Marca, processador e geração são fundamentais para o cálculo correto da carcaça.</p></div>
-        <div class="process-card"><div class="step">3</div><strong>Gere o valor</strong><p>Os serviços fixos somam normalmente e a carcaça entra automaticamente se marcada.</p></div>
+        <div class="process-card"><div class="step">3</div><strong>Veja a soma automática</strong><p>Os serviços fixos somam sozinhos e a carcaça entra automaticamente se marcada.</p></div>
         <div class="process-card"><div class="step">4</div><strong>Envie no WhatsApp</strong><p>Os dados seguem completos para você confirmar e alinhar a retirada do equipamento.</p></div>
       </div>
     </div>
@@ -748,7 +788,7 @@
     <div class="wrap layout">
       <div class="panel">
         <h3>Orçamento validado</h3>
-        <p class="sub">Layout profissional preservado e lógica corrigida. Agora seleção, soma, carcaça automática e envio para WhatsApp funcionam corretamente.</p>
+        <p class="sub">Layout profissional preservado e lógica corrigida. Agora seleção, soma automática, carcaça por geração e envio para WhatsApp funcionam corretamente.</p>
 
         <div class="tabs">
           <button class="tab active" data-tab="tab-servicos" type="button">Serviços</button>
@@ -773,7 +813,7 @@
           <span class="label">Informações do notebook</span>
           <div class="field-grid-3">
             <input id="marca" placeholder="Marca do notebook" />
-            <select id="cpuTipo" onchange="liberarGeracao()">
+            <select id="cpuTipo">
               <option value="">Processador</option>
               <option value="Intel i3">Intel i3</option>
               <option value="Intel i5">Intel i5</option>
@@ -809,7 +849,7 @@
         </div>
 
         <div class="field-grid-2" style="margin-top:18px;">
-          <button id="btnOrcamento" class="btn btn-primary" onclick="calcular()" disabled>Gerar orçamento</button>
+          <button id="btnOrcamento" class="btn btn-primary" type="button">Gerar orçamento</button>
           <button class="btn btn-secondary" onclick="limparFormulario()" type="button">Limpar</button>
         </div>
       </div>
@@ -826,7 +866,7 @@
             <strong id="total">R$ 0</strong>
           </div>
           <div class="summary-actions">
-            <button class="btn btn-primary" onclick="enviarWhatsApp()">Quero fazer o serviço</button>
+            <button class="btn btn-primary" onclick="enviarWhatsApp()" type="button">Quero fazer o serviço</button>
             <a class="btn btn-secondary" href="https://wa.me/5549991204177" target="_blank">Falar direto no WhatsApp</a>
           </div>
         </div>
@@ -846,7 +886,7 @@
       <div class="faq">
         <div class="faq-card"><h3>O valor já é definitivo?</h3><p>Sim. O valor gerado aqui é definitivo e não será alterado, desde que as informações fornecidas estejam corretas (modelo, processador e serviços selecionados).</p></div>
         <div class="faq-card"><h3>Por que a geração importa?</h3><p>A geração é utilizada para termos uma base real do equipamento e é a base do sistema de orçamento. Nossas tabelas seguem a geração do processador, tornando o orçamento mais preciso, assertivo e claro.</p></div>
-        <div class="faq-card"><h3>O que vai para o WhatsApp?</h3><p>Marca e processador do notebook, tipo de serviço selecionado, nome do cliente, bairro (para retirada e entrega do equipamento após o serviço), contato, horário e o total final do orçamento. É muito importante que todos os campos estejam corretos para garantir um atendimento preciso e sem erros.</p></div>
+        <div class="faq-card"><h3>O que vai para o WhatsApp?</h3><p>Marca e processador do notebook, tipo de serviço selecionado, nome do cliente, bairro, contato, horário e o total final do orçamento. É muito importante que todos os campos estejam corretos para garantir um atendimento preciso e sem erros.</p></div>
       </div>
     </div>
   </section>
@@ -871,6 +911,7 @@
     const horarioInput = document.getElementById('horario');
     const obsInput = document.getElementById('obs');
     const carcacaCheck = document.getElementById('carcacaCheck');
+    const servicoCheckboxes = document.querySelectorAll('.servico-checkbox');
 
     document.querySelectorAll('.tab').forEach(tab => {
       tab.addEventListener('click', () => {
@@ -883,9 +924,12 @@
 
     function liberarGeracao() {
       cpuGeracao.disabled = !cpuTipo.value;
-      if (!cpuTipo.value) cpuGeracao.value = '';
+      if (!cpuTipo.value) {
+        cpuGeracao.value = '';
+      }
       atualizarBotao();
       atualizarResumoParcial();
+      atualizarTotalAutomatico();
     }
 
     function atualizarBotao() {
@@ -894,6 +938,7 @@
 
     function obterValorCarcaca(geracao) {
       const g = Number(geracao);
+      if (!g) return 0;
       if (g <= 6) return 460;
       if (g <= 10) return 580;
       return 650;
@@ -901,17 +946,25 @@
 
     function listarServicosSelecionados() {
       const itens = [];
-      document.querySelectorAll('.servico-checkbox').forEach(el => {
+
+      servicoCheckboxes.forEach(el => {
         if (el.checked) {
           itens.push({ nome: el.dataset.name, valor: Number(el.value) });
         }
       });
 
-      if (carcacaCheck.checked && cpuGeracao.value) {
-        itens.push({ nome: 'Reparo de carcaça', valor: obterValorCarcaca(cpuGeracao.value) });
+      if (carcacaCheck.checked) {
+        const valorCarcaca = obterValorCarcaca(cpuGeracao.value);
+        if (valorCarcaca > 0) {
+          itens.push({ nome: 'Reparo de carcaça', valor: valorCarcaca });
+        }
       }
 
       return itens;
+    }
+
+    function formatarMoeda(valor) {
+      return `R$ ${valor}`;
     }
 
     function atualizarResumoParcial() {
@@ -923,12 +976,21 @@
       if (!itens.length) {
         resumoServicos.innerHTML = '<div class="summary-item"><span>Nenhum serviço selecionado</span><span>-</span></div>';
       } else {
-        resumoServicos.innerHTML = itens.map(item => `<div class="summary-item"><span>${item.nome}</span><span>R$ ${item.valor}</span></div>`).join('');
+        resumoServicos.innerHTML = itens
+          .map(item => `<div class="summary-item"><span>${item.nome}</span><span>${formatarMoeda(item.valor)}</span></div>`)
+          .join('');
       }
 
       resumoNotebook.textContent = marca && tipo && geracao
         ? `Notebook informado: ${marca} • ${tipo} • ${geracao}ª geração`
         : 'Preencha marca, processador e geração para validar o cálculo.';
+    }
+
+    function atualizarTotalAutomatico() {
+      const itens = listarServicosSelecionados();
+      const total = itens.reduce((acc, item) => acc + item.valor, 0);
+      totalEl.textContent = formatarMoeda(total);
+      return total;
     }
 
     function calcular() {
@@ -941,14 +1003,12 @@
         return;
       }
 
-      const itens = listarServicosSelecionados();
-      const total = itens.reduce((acc, item) => acc + item.valor, 0);
-      totalEl.textContent = `R$ ${total}`;
       atualizarResumoParcial();
+      atualizarTotalAutomatico();
     }
 
     function limparFormulario() {
-      document.querySelectorAll('.servico-checkbox').forEach(el => el.checked = false);
+      servicoCheckboxes.forEach(el => { el.checked = false; });
       carcacaCheck.checked = false;
       marcaInput.value = '';
       cpuTipo.value = '';
@@ -986,48 +1046,44 @@
       }
 
       const total = itens.reduce((acc, item) => acc + item.valor, 0);
-      const linhasServicos = itens.map(item => `${item.nome} R$${item.valor}`).join('
-');
+      const linhasServicos = itens.map(item => `- ${item.nome} ${formatarMoeda(item.valor)}`).join('\n');
 
-      const msg = `Olá, quero fazer o serviço
-
-Cliente: ${nome}
-Bairro: ${bairro}
-Contato: ${contato}
-Horário: ${horario}
-
-Notebook: ${marca} ${tipo} ${geracao}ª geração
-
-Serviços:
-${linhasServicos}
-
-Total: R$ ${total}${obs ? `
-
-Observações: ${obs}` : ''}`;
+      const msg = `Olá, vi o site da TechCore e fiz um orçamento:\n\nCliente: ${nome || 'Não informado'}\nBairro: ${bairro || 'Não informado'}\nContato: ${contato || 'Não informado'}\nHorário: ${horario || 'Não informado'}\n\nNotebook: ${marca} ${tipo} ${geracao}ª geração\n\nServiços:\n${linhasServicos}\n\nTotal: ${formatarMoeda(total)}\n\nMeu notebook está com o seguinte problema:${obs ? `\n${obs}` : ''}`;
 
       window.open(`https://wa.me/5549991204177?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    [marcaInput, nomeInput, bairroInput, contatoInput, horarioInput].forEach(el => {
+    cpuTipo.addEventListener('change', liberarGeracao);
+    cpuGeracao.addEventListener('change', () => {
+      atualizarBotao();
+      atualizarResumoParcial();
+      atualizarTotalAutomatico();
+    });
+
+    [marcaInput, nomeInput, bairroInput, contatoInput, horarioInput, obsInput].forEach(el => {
       el.addEventListener('input', () => {
         atualizarBotao();
         atualizarResumoParcial();
       });
     });
 
-    cpuGeracao.addEventListener('change', () => {
-      atualizarBotao();
+    servicoCheckboxes.forEach(el => {
+      el.addEventListener('change', () => {
+        atualizarResumoParcial();
+        atualizarTotalAutomatico();
+      });
+    });
+
+    carcacaCheck.addEventListener('change', () => {
       atualizarResumoParcial();
+      atualizarTotalAutomatico();
     });
 
-    document.querySelectorAll('.servico-checkbox').forEach(el => {
-      el.addEventListener('change', atualizarResumoParcial);
-    });
-
-    carcacaCheck.addEventListener('change', atualizarResumoParcial);
+    btnOrcamento.addEventListener('click', calcular);
 
     atualizarResumoParcial();
     atualizarBotao();
+    atualizarTotalAutomatico();
   </script>
 </body>
 </html>
