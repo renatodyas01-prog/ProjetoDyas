@@ -6,7 +6,6 @@
 <title>TechCore Assistência</title>
 
 <style>
-
 body{
 margin:0;
 font-family:Arial;
@@ -16,24 +15,23 @@ linear-gradient(rgba(4,8,18,0.92),rgba(4,8,18,0.96)),
 url('logo.png') center/cover no-repeat fixed;
 }
 
-/* CONTAINER */
 .wrap{
-max-width:1000px;
+max-width:1200px;
 margin:auto;
 padding:20px;
 }
 
-/* HEADER */
+/* HERO / TOPO */
 h1{
-font-size:32px;
-margin-bottom:20px;
+font-size:40px;
+margin-bottom:10px;
 }
 
 /* PASSOS */
 .tabs{
 display:flex;
 gap:10px;
-margin-bottom:20px;
+margin-bottom:15px;
 }
 
 .tab{
@@ -42,6 +40,7 @@ border-radius:20px;
 background:#111;
 border:1px solid #333;
 opacity:0.5;
+pointer-events:none;
 }
 
 .tab.active{
@@ -56,14 +55,13 @@ opacity:1;
 input,select,textarea{
 width:100%;
 padding:14px;
-margin:8px 0;
+margin:6px 0;
 border-radius:12px;
 border:1px solid rgba(255,255,255,0.08);
 background:#081224;
 color:#fff;
 }
 
-/* CHECKBOX */
 .check{
 display:flex;
 gap:10px;
@@ -71,14 +69,12 @@ margin:10px 0;
 cursor:pointer;
 }
 
-/* TOTAL */
 .total{
 font-size:34px;
 color:#22c55e;
 margin:20px 0;
 }
 
-/* BOTÃO */
 button{
 padding:14px;
 border:none;
@@ -89,6 +85,17 @@ cursor:pointer;
 font-weight:bold;
 }
 
+/* CARDS SIMPLES (mantém visual) */
+.section{
+margin-top:40px;
+}
+
+.card{
+background:#081224;
+padding:20px;
+border-radius:16px;
+margin-bottom:15px;
+}
 </style>
 </head>
 
@@ -96,9 +103,22 @@ font-weight:bold;
 
 <div class="wrap">
 
-<h1>Orçamento TechCore</h1>
+<!-- HERO -->
+<h1>TechCore Assistência</h1>
+<p>Recuperação profissional de notebooks • Chapecó - SC</p>
 
-<!-- PASSOS -->
+<!-- CARDS EXPLICATIVOS (mantido) -->
+<div class="section">
+<div class="card">Você faz o orçamento completo</div>
+<div class="card">Envia direto para o técnico</div>
+<div class="card">Aguarda confirmação</div>
+</div>
+
+<!-- ORÇAMENTO -->
+<div class="section">
+
+<h2>Orçamento imediato</h2>
+
 <div class="tabs">
 <div class="tab active">Passo 1 • Cliente</div>
 <div class="tab">Passo 2 • Notebook</div>
@@ -110,7 +130,7 @@ font-weight:bold;
 <input id="nome" placeholder="Nome">
 <input id="bairro" placeholder="Bairro">
 <input id="contato" placeholder="WhatsApp">
-<textarea id="obs" placeholder="Problema do notebook"></textarea>
+<textarea id="obs" placeholder="Descreva o problema"></textarea>
 </div>
 
 <!-- NOTEBOOK -->
@@ -119,9 +139,9 @@ font-weight:bold;
 
 <select id="cpuTipo">
 <option value="">Processador</option>
-<option value="i3">i3</option>
-<option value="i5">i5</option>
-<option value="i7">i7</option>
+<option>i3</option>
+<option>i5</option>
+<option>i7</option>
 </select>
 
 <select id="cpuGeracao">
@@ -144,16 +164,17 @@ font-weight:bold;
 
 </div>
 
-<!-- TOTAL -->
 <div class="total">R$ <span id="total">0</span></div>
 
 <button id="btnNext">Seguinte</button>
 
 </div>
 
+</div>
+
 <script>
 
-// CONTROLE DE PASSO
+// PASSOS
 let passo = 1;
 
 const btn = document.getElementById("btnNext");
@@ -202,12 +223,10 @@ function calcular(){
 
 let total = 0;
 
-// serviços
 document.querySelectorAll(".servico").forEach(c=>{
 if(c.checked) total += parseInt(c.value);
 });
 
-// carcaça automática
 if(document.getElementById("carcaca").checked){
 
 let g = parseInt(cpuGeracao.value);
