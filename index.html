@@ -1,34 +1,126 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Imprima Informática</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
 
-<script type="module" src="firebase.js"></script>
-<script defer src="script.js"></script>
+body{
+margin:0;
+font-family:Arial;
+background:#050505;
+color:#fff;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+padding:15px 30px;
+background:#000;
+border-bottom:1px solid #00ffe0;
+}
+
+.logo{
+color:#00ffe0;
+font-weight:bold;
+}
+
+.social a{
+margin-left:15px;
+color:#00ffe0;
+text-decoration:none;
+}
+
+.hero{
+text-align:center;
+padding:60px 20px;
+}
+
+.hero h1{
+font-size:32px;
+}
+
+.badges{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:10px;
+margin-top:20px;
+}
+
+.badges div{
+background:#00ffe0;
+color:#000;
+padding:8px 12px;
+border-radius:5px;
+font-weight:bold;
+}
+
+.calc{
+text-align:center;
+padding:40px;
+}
+
+input{
+margin:10px;
+}
+
+.total{
+font-size:28px;
+color:#00ffe0;
+margin:20px;
+}
+
+button{
+background:#00ffe0;
+border:none;
+padding:15px 25px;
+font-size:16px;
+cursor:pointer;
+border-radius:5px;
+}
+
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:#fff;
+padding:15px;
+border-radius:50%;
+font-size:20px;
+text-decoration:none;
+}
+
+</style>
+
 </head>
 
 <body>
 
 <header>
-  <div class="top">
-    <div class="logo">IMPRIMA INFORMÁTICA</div>
+<div class="logo">IMPRIMA INFORMÁTICA</div>
 
-    <div class="social">
-      <a href="https://wa.me/5549999570660" target="_blank">WhatsApp</a>
-      <a href="#">Instagram</a>
-      <a href="#">Facebook</a>
-    </div>
-  </div>
+<div class="social">
+<a href="https://wa.me/5549999570660">WhatsApp</a>
+<a href="#">Instagram</a>
+<a href="#">Facebook</a>
+</div>
 </header>
 
 <section class="hero">
 <h1>Orçamento imediato</h1>
 <p>Sem enrolação. Atendimento rápido.</p>
+
+<div class="badges">
+<div>✔ Empresa verificada</div>
+<div>✔ Garantia</div>
+<div>✔ Atendimento rápido</div>
+</div>
+
 </section>
 
 <section class="calc">
@@ -46,6 +138,37 @@ R$ <span id="total">0</span>
 <button onclick="enviarWhats()">Falar no WhatsApp</button>
 
 </section>
+
+<a class="whatsapp-float" href="https://wa.me/5549999570660">💬</a>
+
+<script>
+
+let total = 0;
+
+document.querySelectorAll("input").forEach(e=>{
+  e.addEventListener("change", ()=>{
+    total = 0;
+
+    document.querySelectorAll("input:checked").forEach(c=>{
+      total += parseInt(c.value);
+    });
+
+    document.getElementById("total").innerText = total;
+  });
+});
+
+function enviarWhats(){
+
+  let msg = `Olá, fiz um orçamento:
+
+Total: R$ ${total}
+
+Meu problema é:`;
+
+  window.open(`https://wa.me/5549999570660?text=${encodeURIComponent(msg)}`);
+}
+
+</script>
 
 </body>
 </html>
