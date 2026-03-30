@@ -22,6 +22,7 @@
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
@@ -419,6 +420,14 @@
     .panel h3 { margin: 0 0 10px; font-size: 28px; }
     .panel .sub { margin: 0 0 18px; color: var(--muted); line-height: 1.7; }
 
+    .steps-line {
+      margin-bottom: 14px;
+      color: #86efac;
+      font-weight: 800;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
     .tabs {
       display: flex;
       gap: 10px;
@@ -776,9 +785,9 @@
       </div>
 
       <div class="process">
-        <div class="process-card"><div class="step">1</div><strong>Escolha os serviços</strong><p>O cliente marca exatamente os serviços desejados antes de enviar o orçamento.</p></div>
+        <div class="process-card"><div class="step">1</div><strong>Preencha seus dados</strong><p>Primeiro o cliente informa seus dados básicos para facilitar o contato e a retirada.</p></div>
         <div class="process-card"><div class="step">2</div><strong>Informe o notebook</strong><p>Marca, processador e geração são fundamentais para o cálculo correto da carcaça.</p></div>
-        <div class="process-card"><div class="step">3</div><strong>Veja a soma automática</strong><p>Os serviços fixos somam sozinhos e a carcaça entra automaticamente se marcada.</p></div>
+        <div class="process-card"><div class="step">3</div><strong>Escolha os serviços</strong><p>Os serviços fixos somam sozinhos e a carcaça entra automaticamente se marcada.</p></div>
         <div class="process-card"><div class="step">4</div><strong>Envie no WhatsApp</strong><p>Os dados seguem completos para você confirmar e alinhar a retirada do equipamento.</p></div>
       </div>
     </div>
@@ -790,23 +799,27 @@
         <h3>Orçamento validado</h3>
         <p class="sub">Layout profissional preservado e lógica corrigida. Agora seleção, soma automática, carcaça por geração e envio para WhatsApp funcionam corretamente.</p>
 
-        <div class="tabs">
-          <button class="tab active" data-tab="tab-servicos" type="button">Serviços</button>
-          <button class="tab" data-tab="tab-notebook" type="button">Notebook</button>
-          <button class="tab" data-tab="tab-cliente" type="button">Cliente</button>
+        <div class="steps-line">
+          Passo 1: Preencha seus dados → Passo 2: Informe o notebook → Passo 3: Escolha os serviços
         </div>
 
-        <div id="tab-servicos" class="tab-pane active">
-          <span class="label">Selecione os serviços</span>
-          <div class="checklist">
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="140" data-name="Formatação sem backup"><div><span class="check-title">Formatação sem backup</span><span class="check-sub">R$ 140</span></div></label>
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="190" data-name="Formatação com backup"><div><span class="check-title">Formatação com backup</span><span class="check-sub">R$ 190</span></div></label>
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="680" data-name="Troca de tela"><div><span class="check-title">Troca de tela</span><span class="check-sub">R$ 680</span></div></label>
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="120" data-name="Diagnóstico técnico"><div><span class="check-title">Diagnóstico técnico</span><span class="check-sub">R$ 120</span></div></label>
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="490" data-name="Teclado embutido (interno)"><div><span class="check-title">Teclado embutido (interno)</span><span class="check-sub">R$ 490</span></div></label>
-            <label class="check"><input type="checkbox" class="servico-checkbox" value="160" data-name="Limpeza + pasta térmica"><div><span class="check-title">Limpeza + pasta térmica</span><span class="check-sub">R$ 160</span></div></label>
-            <label class="check"><input type="checkbox" id="carcacaCheck"><div><span class="check-title">Reparo de carcaça</span><span class="check-sub">Valor automático conforme geração do processador</span></div></label>
+        <div class="tabs">
+          <button class="tab active" data-tab="tab-cliente" type="button">Passo 1 • Cliente</button>
+          <button class="tab" data-tab="tab-notebook" type="button">Passo 2 • Notebook</button>
+          <button class="tab" data-tab="tab-servicos" type="button">Passo 3 • Serviços</button>
+        </div>
+
+        <div id="tab-cliente" class="tab-pane active">
+          <span class="label">Dados do cliente</span>
+          <div class="field-grid-2">
+            <input id="nome" placeholder="Nome" />
+            <input id="bairro" placeholder="Bairro" />
           </div>
+          <div class="field-grid-2">
+            <input id="contato" placeholder="WhatsApp" />
+            <input id="horario" placeholder="Horário disponível para retirada" />
+          </div>
+          <textarea id="obs" placeholder="Observações adicionais (opcional)"></textarea>
         </div>
 
         <div id="tab-notebook" class="tab-pane">
@@ -835,17 +848,17 @@
           <div class="notice">A geração é utilizada para termos uma base real do equipamento e é a base do sistema de orçamento. Nossas tabelas seguem a geração do processador, tornando o orçamento mais preciso, assertivo e claro.</div>
         </div>
 
-        <div id="tab-cliente" class="tab-pane">
-          <span class="label">Dados do cliente</span>
-          <div class="field-grid-2">
-            <input id="nome" placeholder="Nome" />
-            <input id="bairro" placeholder="Bairro" />
+        <div id="tab-servicos" class="tab-pane">
+          <span class="label">Selecione os serviços</span>
+          <div class="checklist">
+            <label class="check"><input type="checkbox" class="servico-checkbox" value="140" data-name="Formatação sem backup"><div><span class="check-title">Formatação sem backup</span><span class="check-sub">R$ 140</span></div></label>
+            <label class="check"><input type="checkbox" class="servico-checkbox" value="190" data-name="Formatação com backup"><div><span class="check-title">Formatação com backup</span><span class="check-sub">R$ 190</span></div></label>
+            <label class="check"><input type="checkbox" class="servico-checkbox" value="680" data-name="Troca de tela"><div><span class="check-title">Troca de tela</span><span class="check-sub">R$ 680</span></div></label>
+            <label class="check"><input type="checkbox" class="servico-checkbox" value="120" data-name="Diagnóstico técnico"><div><span class="check-title">Diagnóstico técnico</span><span class="check-sub">R$ 120</span></div></label>
+            <label class="check"><input type="checkbox" class="servico-checkbox" value="490" data-name="Teclado embutido (interno)"><div><span class="check-title">Teclado embutido (interno)</span><span class="check-sub">R$ 490</span></div></label>
+            <label class="check"><input type="checkbox" class="servico-checkbox" value="160" data-name="Limpeza + pasta térmica"><div><span class="check-title">Limpeza + pasta térmica</span><span class="check-sub">R$ 160</span></div></label>
+            <label class="check"><input type="checkbox" id="carcacaCheck"><div><span class="check-title">Reparo de carcaça</span><span class="check-sub">Valor automático conforme geração do processador</span></div></label>
           </div>
-          <div class="field-grid-2">
-            <input id="contato" placeholder="WhatsApp" />
-            <input id="horario" placeholder="Horário disponível para retirada" />
-          </div>
-          <textarea id="obs" placeholder="Observações adicionais (opcional)"></textarea>
         </div>
 
         <div class="field-grid-2" style="margin-top:18px;">
@@ -1022,6 +1035,11 @@
       totalEl.textContent = 'R$ 0';
       atualizarBotao();
       atualizarResumoParcial();
+      atualizarTotalAutomatico();
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.querySelector('[data-tab="tab-cliente"]').classList.add('active');
+      document.getElementById('tab-cliente').classList.add('active');
     }
 
     function enviarWhatsApp() {
@@ -1054,6 +1072,7 @@
     }
 
     cpuTipo.addEventListener('change', liberarGeracao);
+
     cpuGeracao.addEventListener('change', () => {
       atualizarBotao();
       atualizarResumoParcial();
