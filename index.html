@@ -11,8 +11,23 @@
 body{
 margin:0;
 font-family:Arial;
-background:#050505;
 color:#fff;
+background:url('logo.png') no-repeat center center fixed;
+background-size:cover;
+position:relative;
+}
+
+/* CAMADA ESCURA + EFEITO PREMIUM */
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+backdrop-filter:blur(4px);
+z-index:-1;
 }
 
 header{
