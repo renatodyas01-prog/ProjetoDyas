@@ -1,275 +1,93 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TechCore Assistência</title>
-
-<style>
-body{
-margin:0;
-font-family:Arial;
-color:#fff;
-background:
-linear-gradient(rgba(4,8,18,0.92),rgba(4,8,18,0.96)),
-url('logo.png') center/cover no-repeat fixed;
-}
-
-.wrap{
-max-width:1200px;
-margin:auto;
-padding:20px;
-}
-
-/* HERO / TOPO */
-h1{
-font-size:40px;
-margin-bottom:10px;
-}
-
-/* PASSOS */
-.tabs{
-display:flex;
-gap:10px;
-margin-bottom:15px;
-}
-
-.tab{
-padding:10px 16px;
-border-radius:20px;
-background:#111;
-border:1px solid #333;
-opacity:0.5;
-pointer-events:none;
-}
-
-.tab.active{
-background:#2563eb;
-opacity:1;
-}
-
-/* FORM */
-.tab-pane{display:none;}
-.tab-pane.active{display:block;}
-
-input,select,textarea{
-width:100%;
-padding:14px;
-margin:6px 0;
-border-radius:12px;
-border:1px solid rgba(255,255,255,0.08);
-background:#081224;
-color:#fff;
-}
-
-.check{
-display:flex;
-gap:10px;
-margin:10px 0;
-cursor:pointer;
-}
-
-.total{
-font-size:34px;
-color:#22c55e;
-margin:20px 0;
-}
-
-button{
-padding:14px;
-border:none;
-border-radius:12px;
-background:#2563eb;
-color:#fff;
-cursor:pointer;
-font-weight:bold;
-}
-
-/* CARDS SIMPLES (mantém visual) */
-.section{
-margin-top:40px;
-}
-
-.card{
-background:#081224;
-padding:20px;
-border-radius:16px;
-margin-bottom:15px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="wrap">
-
-<!-- HERO -->
-<h1>TechCore Assistência</h1>
-<p>Recuperação profissional de notebooks • Chapecó - SC</p>
-
-<!-- CARDS EXPLICATIVOS (mantido) -->
-<div class="section">
-<div class="card">Você faz o orçamento completo</div>
-<div class="card">Envia direto para o técnico</div>
-<div class="card">Aguarda confirmação</div>
-</div>
-
-<!-- ORÇAMENTO -->
-<div class="section">
-
-<h2>Orçamento imediato</h2>
-
-<div class="tabs">
-<div class="tab active">Passo 1 • Cliente</div>
-<div class="tab">Passo 2 • Notebook</div>
-<div class="tab">Passo 3 • Serviços</div>
-</div>
-
-<!-- CLIENTE -->
-<div id="step1" class="tab-pane active">
-<input id="nome" placeholder="Nome">
-<input id="bairro" placeholder="Bairro">
-<input id="contato" placeholder="WhatsApp">
-<textarea id="obs" placeholder="Descreva o problema"></textarea>
-</div>
-
-<!-- NOTEBOOK -->
-<div id="step2" class="tab-pane">
-<input id="marca" placeholder="Marca do notebook">
-
-<select id="cpuTipo">
-<option value="">Processador</option>
-<option>i3</option>
-<option>i5</option>
-<option>i7</option>
-</select>
-
-<select id="cpuGeracao">
-<option value="">Geração</option>
-<option value="6">6ª</option>
-<option value="8">8ª</option>
-<option value="10">10ª</option>
-<option value="11">11+</option>
-</select>
-</div>
-
-<!-- SERVIÇOS -->
-<div id="step3" class="tab-pane">
-
-<label class="check"><input type="checkbox" class="servico" value="140"> Formatação</label>
-<label class="check"><input type="checkbox" class="servico" value="190"> Formatação + backup</label>
-<label class="check"><input type="checkbox" class="servico" value="680"> Troca de tela</label>
-<label class="check"><input type="checkbox" class="servico" value="490"> Teclado</label>
-<label class="check"><input type="checkbox" id="carcaca"> Reparo de carcaça (automático)</label>
-
-</div>
-
-<div class="total">R$ <span id="total">0</span></div>
-
-<button id="btnNext">Seguinte</button>
-
-</div>
-
-</div>
-
-<script>
-
-// PASSOS
 let passo = 1;
 
-const btn = document.getElementById("btnNext");
+const btnNext = document.getElementById("btnNext");
+
 const tabs = document.querySelectorAll(".tab");
 const panes = document.querySelectorAll(".tab-pane");
 
-function atualizarTela(){
-panes.forEach(p=>p.classList.remove("active"));
-tabs.forEach(t=>t.classList.remove("active"));
+function atualizarPasso(){
+  panes.forEach(p=>p.classList.remove("active"));
+  tabs.forEach(t=>t.classList.remove("active"));
 
-panes[passo-1].classList.add("active");
-tabs[passo-1].classList.add("active");
+  if(passo === 1){
+    document.getElementById("tab-cliente").classList.add("active");
+    tabs[2].classList.add("active");
+    btnNext.innerText = "Seguinte";
+  }
 
-btn.innerText = passo === 3 ? "Gerar orçamento" : "Seguinte";
+  if(passo === 2){
+    document.getElementById("tab-notebook").classList.add("active");
+    tabs[1].classList.add("active");
+    btnNext.innerText = "Seguinte";
+  }
+
+  if(passo === 3){
+    document.getElementById("tab-servicos").classList.add("active");
+    tabs[0].classList.add("active");
+    btnNext.innerText = "Gerar orçamento";
+  }
 }
 
-// BOTÃO
-btn.onclick = ()=>{
+btnNext.onclick = ()=>{
 
-if(passo === 1){
-if(!nome.value || !contato.value){
-alert("Preencha seus dados");
-return;
-}
-passo++;
-}
+  if(passo === 1){
+    if(!nome.value || !contato.value){
+      alert("Preencha os dados do cliente");
+      return;
+    }
+    passo = 2;
+  }
 
-else if(passo === 2){
-if(!marca.value || !cpuTipo.value || !cpuGeracao.value){
-alert("Preencha os dados do notebook");
-return;
-}
-passo++;
-}
+  else if(passo === 2){
+    if(!marca.value || !cpuTipo.value || !cpuGeracao.value){
+      alert("Preencha os dados do notebook");
+      return;
+    }
+    passo = 3;
+  }
 
-else{
-enviar();
-return;
-}
+  else{
+    calcular();
+    enviarWhatsApp();
+    return;
+  }
 
-atualizarTela();
+  atualizarPasso();
 };
 
-// CALCULO
+// =======================
+// CALCULO CORRIGIDO
+// =======================
+
 function calcular(){
 
-let total = 0;
+  let total = 0;
 
-document.querySelectorAll(".servico").forEach(c=>{
-if(c.checked) total += parseInt(c.value);
-});
+  document.querySelectorAll(".servico-checkbox").forEach(c=>{
+    if(c.checked){
+      total += Number(c.value);
+    }
+  });
 
-if(document.getElementById("carcaca").checked){
+  if(carcacaCheck.checked && cpuGeracao.value){
+    let g = Number(cpuGeracao.value);
 
-let g = parseInt(cpuGeracao.value);
+    if(g <= 6) total += 460;
+    else if(g <= 10) total += 580;
+    else total += 650;
+  }
 
-if(g){
-if(g <= 6) total += 460;
-else if(g <= 10) total += 580;
-else total += 650;
-}
-}
-
-document.getElementById("total").innerText = total;
+  totalEl.textContent = `R$ ${total}`;
+  atualizarResumoParcial();
 }
 
 // EVENTOS
-document.querySelectorAll(".servico").forEach(c=>{
-c.addEventListener("change", calcular);
+document.querySelectorAll(".servico-checkbox").forEach(c=>{
+  c.addEventListener("change", calcular);
 });
 
 cpuGeracao.addEventListener("change", calcular);
-document.getElementById("carcaca").addEventListener("change", calcular);
+carcacaCheck.addEventListener("change", calcular);
 
-// WHATSAPP
-function enviar(){
-
-let msg = `Olá, fiz um orçamento na TechCore:
-
-Cliente: ${nome.value}
-Bairro: ${bairro.value}
-Contato: ${contato.value}
-
-Notebook: ${marca.value} ${cpuTipo.value} ${cpuGeracao.value}
-
-Total: R$ ${document.getElementById("total").innerText}
-
-Problema:
-${obs.value}`;
-
-window.open(`https://wa.me/5549991204177?text=${encodeURIComponent(msg)}`);
-
-}
-
-</script>
-
-</body>
-</html>
+// INIT
+atualizarPasso();
