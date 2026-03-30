@@ -11,15 +11,29 @@ body{
 margin:0;
 font-family:Arial;
 color:#fff;
-background:linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.95)),url('logo.png') center/cover no-repeat fixed;
+background:
+linear-gradient(rgba(4,8,18,0.92),rgba(4,8,18,0.96)),
+url('logo.png') center/cover no-repeat fixed;
 }
 
-.wrap{max-width:800px;margin:auto;padding:20px;}
+/* CONTAINER */
+.wrap{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
 
+/* HEADER */
+h1{
+font-size:32px;
+margin-bottom:20px;
+}
+
+/* PASSOS */
 .tabs{
 display:flex;
 gap:10px;
-margin-bottom:15px;
+margin-bottom:20px;
 }
 
 .tab{
@@ -35,32 +49,44 @@ background:#2563eb;
 opacity:1;
 }
 
+/* FORM */
 .tab-pane{display:none;}
 .tab-pane.active{display:block;}
 
-input,select{
+input,select,textarea{
 width:100%;
-padding:12px;
-margin:6px 0;
-border-radius:10px;
-border:none;
-background:#111;
+padding:14px;
+margin:8px 0;
+border-radius:12px;
+border:1px solid rgba(255,255,255,0.08);
+background:#081224;
 color:#fff;
 }
 
-button{
-padding:14px;
-border:none;
-border-radius:10px;
-background:#2563eb;
-color:#fff;
+/* CHECKBOX */
+.check{
+display:flex;
+gap:10px;
+margin:10px 0;
 cursor:pointer;
 }
 
+/* TOTAL */
 .total{
-font-size:28px;
-margin:15px 0;
+font-size:34px;
 color:#22c55e;
+margin:20px 0;
+}
+
+/* BOTÃO */
+button{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#2563eb;
+color:#fff;
+cursor:pointer;
+font-weight:bold;
 }
 
 </style>
@@ -70,8 +96,9 @@ color:#22c55e;
 
 <div class="wrap">
 
-<h2>Orçamento TechCore</h2>
+<h1>Orçamento TechCore</h1>
 
+<!-- PASSOS -->
 <div class="tabs">
 <div class="tab active">Passo 1 • Cliente</div>
 <div class="tab">Passo 2 • Notebook</div>
@@ -79,67 +106,72 @@ color:#22c55e;
 </div>
 
 <!-- CLIENTE -->
-<div id="tab1" class="tab-pane active">
+<div id="step1" class="tab-pane active">
 <input id="nome" placeholder="Nome">
+<input id="bairro" placeholder="Bairro">
 <input id="contato" placeholder="WhatsApp">
+<textarea id="obs" placeholder="Problema do notebook"></textarea>
 </div>
 
 <!-- NOTEBOOK -->
-<div id="tab2" class="tab-pane">
-<input id="marca" placeholder="Marca">
+<div id="step2" class="tab-pane">
+<input id="marca" placeholder="Marca do notebook">
 
 <select id="cpuTipo">
 <option value="">Processador</option>
-<option>i3</option>
-<option>i5</option>
-<option>i7</option>
+<option value="i3">i3</option>
+<option value="i5">i5</option>
+<option value="i7">i7</option>
 </select>
 
 <select id="cpuGeracao">
 <option value="">Geração</option>
-<option value="6">6</option>
-<option value="8">8</option>
-<option value="10">10</option>
+<option value="6">6ª</option>
+<option value="8">8ª</option>
+<option value="10">10ª</option>
 <option value="11">11+</option>
 </select>
 </div>
 
 <!-- SERVIÇOS -->
-<div id="tab3" class="tab-pane">
+<div id="step3" class="tab-pane">
 
-<label><input type="checkbox" class="servico" value="140"> Formatação</label><br>
-<label><input type="checkbox" class="servico" value="190"> Formatação + backup</label><br>
-<label><input type="checkbox" class="servico" value="680"> Tela</label><br>
-<label><input type="checkbox" class="servico" value="490"> Teclado</label><br>
-<label><input type="checkbox" id="carcaca"> Carcaça automática</label>
+<label class="check"><input type="checkbox" class="servico" value="140"> Formatação</label>
+<label class="check"><input type="checkbox" class="servico" value="190"> Formatação + backup</label>
+<label class="check"><input type="checkbox" class="servico" value="680"> Troca de tela</label>
+<label class="check"><input type="checkbox" class="servico" value="490"> Teclado</label>
+<label class="check"><input type="checkbox" id="carcaca"> Reparo de carcaça (automático)</label>
 
 </div>
 
+<!-- TOTAL -->
 <div class="total">R$ <span id="total">0</span></div>
 
-<button id="next">Seguinte</button>
+<button id="btnNext">Seguinte</button>
 
 </div>
 
 <script>
 
+// CONTROLE DE PASSO
 let passo = 1;
 
-const next = document.getElementById("next");
+const btn = document.getElementById("btnNext");
 const tabs = document.querySelectorAll(".tab");
 const panes = document.querySelectorAll(".tab-pane");
 
-function mostrar(){
+function atualizarTela(){
 panes.forEach(p=>p.classList.remove("active"));
 tabs.forEach(t=>t.classList.remove("active"));
 
 panes[passo-1].classList.add("active");
 tabs[passo-1].classList.add("active");
 
-next.innerText = passo === 3 ? "Gerar orçamento" : "Seguinte";
+btn.innerText = passo === 3 ? "Gerar orçamento" : "Seguinte";
 }
 
-next.onclick = ()=>{
+// BOTÃO
+btn.onclick = ()=>{
 
 if(passo === 1){
 if(!nome.value || !contato.value){
@@ -162,9 +194,10 @@ enviar();
 return;
 }
 
-mostrar();
+atualizarTela();
 };
 
+// CALCULO
 function calcular(){
 
 let total = 0;
@@ -174,7 +207,7 @@ document.querySelectorAll(".servico").forEach(c=>{
 if(c.checked) total += parseInt(c.value);
 });
 
-// carcaça
+// carcaça automática
 if(document.getElementById("carcaca").checked){
 
 let g = parseInt(cpuGeracao.value);
@@ -189,6 +222,7 @@ else total += 650;
 document.getElementById("total").innerText = total;
 }
 
+// EVENTOS
 document.querySelectorAll(".servico").forEach(c=>{
 c.addEventListener("change", calcular);
 });
@@ -196,15 +230,21 @@ c.addEventListener("change", calcular);
 cpuGeracao.addEventListener("change", calcular);
 document.getElementById("carcaca").addEventListener("change", calcular);
 
+// WHATSAPP
 function enviar(){
 
 let msg = `Olá, fiz um orçamento na TechCore:
 
 Cliente: ${nome.value}
-Notebook: ${marca.value}
+Bairro: ${bairro.value}
+Contato: ${contato.value}
+
+Notebook: ${marca.value} ${cpuTipo.value} ${cpuGeracao.value}
+
 Total: R$ ${document.getElementById("total").innerText}
 
-Meu problema é:`;
+Problema:
+${obs.value}`;
 
 window.open(`https://wa.me/5549991204177?text=${encodeURIComponent(msg)}`);
 
