@@ -1,1 +1,51 @@
 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imprima Informática</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script type="module" src="firebase.js"></script>
+<script defer src="script.js"></script>
+</head>
+
+<body>
+
+<header>
+  <div class="top">
+    <div class="logo">IMPRIMA INFORMÁTICA</div>
+
+    <div class="social">
+      <a href="https://wa.me/5549999570660" target="_blank">WhatsApp</a>
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+<h1>Orçamento imediato</h1>
+<p>Sem enrolação. Atendimento rápido.</p>
+</section>
+
+<section class="calc">
+
+<h2>Simular Orçamento</h2>
+
+<label><input type="checkbox" value="180"> Limpeza</label>
+<label><input type="checkbox" value="280"> Manutenção</label>
+<label><input type="checkbox" value="490"> Teclado</label>
+
+<div class="total">
+R$ <span id="total">0</span>
+</div>
+
+<button onclick="enviarWhats()">Falar no WhatsApp</button>
+
+</section>
+
+</body>
+</html>
